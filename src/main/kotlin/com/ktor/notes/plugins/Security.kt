@@ -8,19 +8,20 @@ import io.ktor.server.auth.jwt.*
 
 
 fun Application.configureSecurity() {
-    val jwtRealm = "ktor sample app"
+    val jwtRealm = "ktor practise notes app"
     authentication {
         jwt("auth-jwt") {
             realm = jwtRealm
             verifier(JwtService.getVerifier())
             validate {
-                val login = it.payload.getClaim("username").asString()
-                val log = listOfLogin.find { user -> user.username == login }
-                if (log == null) {
-                    null;
-                } else {
+                val username = it.payload.getClaim("username").asString()
+                val user = listOfLogin.find { user -> user.username == username }
+                if (user != null) {
                     JWTPrincipal(it.payload)
+                } else {
+                    null
                 }
+
             }
         }
     }
