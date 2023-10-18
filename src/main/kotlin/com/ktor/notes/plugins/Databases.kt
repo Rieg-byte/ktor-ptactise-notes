@@ -11,14 +11,11 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
     fun initializationDatabase() {
         Database.connect(
-            url = "jdbc:postgresql://localhost:5432/notes",
+            url = "",
             driver = "org.postgresql.Driver",
             user = "postgres",
-            password = "tseked02"
+            password = ""
         )
-        transaction {
-            SchemaUtils.create(Users)
-        }
     }
 
     suspend fun <T> dbQuery(block: suspend () -> T): T =
