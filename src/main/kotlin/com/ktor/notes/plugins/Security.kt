@@ -1,21 +1,21 @@
 package com.ktor.notes.plugins
 
 import com.ktor.notes.auth.JwtService
-import com.ktor.notes.features.login.model.listOfLogin
+import com.ktor.notes.data.users.UsersDaoImpl
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
 
-fun Application.configureSecurity() {
+fun Application.configureSecurity(usersDaoImpl: UsersDaoImpl) {
     val jwtRealm = "ktor practise notes app"
     authentication {
         jwt("auth-jwt") {
             realm = jwtRealm
             verifier(JwtService.getVerifier())
             validate {
-                val username = it.payload.getClaim("username").asString()
-                val user = listOfLogin.find { user -> user.username == username }
+                val login = it.payload.getClaim("login").asString()
+                val user = usersDaoImpl.getUser(login)
                 if (user != null) {
                     JWTPrincipal(it.payload)
                 } else {
