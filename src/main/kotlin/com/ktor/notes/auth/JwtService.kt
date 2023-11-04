@@ -3,7 +3,6 @@ package com.ktor.notes.auth
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.ktor.notes.features.login.model.Login
 import java.lang.System.getenv
 import java.util.*
 
@@ -17,10 +16,10 @@ object JwtService {
         .withIssuer(issuer)
         .build()
 
-    fun generateToken(login: Login): String {
+    fun generateToken(login: String): String {
         return JWT.create()
             .withIssuer(issuer)
-            .withClaim("username", login.username)
+            .withClaim("login", login)
             .withExpiresAt(Date(System.currentTimeMillis() + 600000000))
             .sign(algorithm)
     }
