@@ -3,6 +3,7 @@ package com.ktor.notes.data.users
 import com.ktor.notes.plugins.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 
 class UsersDaoImpl : UsersDao {
     private fun resultRowToUser(row: ResultRow) = User(
@@ -11,6 +12,7 @@ class UsersDaoImpl : UsersDao {
         username = row[Users.username],
         email = row[Users.password]
     )
+
     override suspend fun insertUser(user: User) = dbQuery {
         val insertStatement = Users.insert{
             it[login] = user.login
@@ -19,5 +21,12 @@ class UsersDaoImpl : UsersDao {
             it[email] = user.email ?: ""
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToUser)
+    }
+
+    override suspend fun getUser(login: String): User? = dbQuery {
+        Users
+            .select { Users.login eq login }
+            .map(::resultRowToUser)
+            .singleOrNull()
     }
 }

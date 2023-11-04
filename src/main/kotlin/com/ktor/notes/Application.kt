@@ -1,5 +1,6 @@
 package com.ktor.notes
 
+import com.ktor.notes.data.users.UsersDaoImpl
 import com.ktor.notes.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -11,8 +12,9 @@ fun main() {
 }
 
 fun Application.module() {
+    val usersDaoImpl = UsersDaoImpl()
     DatabaseFactory.initializationDatabase()
-    configureSecurity()
+    configureSecurity(usersDaoImpl)
     configureSerialization()
     configureRouting()
 
