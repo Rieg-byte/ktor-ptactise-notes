@@ -1,20 +1,19 @@
 package com.ktor.notes.plugins
 
 
-import com.ktor.notes.data.users.Users
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
+import java.lang.System.getenv
 
 
 object DatabaseFactory {
     fun initializationDatabase() {
         Database.connect(
-            url = "",
-            driver = "org.postgresql.Driver",
-            user = "postgres",
-            password = ""
+            url = getenv("URL_DB"),
+            driver = getenv("DRIVER_DB"),
+            user = getenv("USER_DB"),
+            password = getenv("PASSWORD_DB")
         )
     }
 
