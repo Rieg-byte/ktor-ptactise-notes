@@ -1,8 +1,8 @@
-package com.ktor.notes.features.login
+package com.ktor.notes.routes.login
 
 import com.ktor.notes.auth.JwtService
 import com.ktor.notes.data.users.UsersDaoImpl
-import com.ktor.notes.features.login.model.LoginReceive
+import com.ktor.notes.routes.login.model.LoginReceive
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*

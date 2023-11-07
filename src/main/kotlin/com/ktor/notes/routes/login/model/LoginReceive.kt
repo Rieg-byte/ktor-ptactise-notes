@@ -1,4 +1,4 @@
-package com.ktor.notes.features.login.model
+package com.ktor.notes.routes.login.model
 
 
 import kotlinx.serialization.Serializable
